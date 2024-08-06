@@ -11,6 +11,7 @@ import SoundCloudAPI from './soundcloud-api.js';
 export default class {
   private readonly youtubeAPI: YoutubeAPI;
   private readonly spotifyAPI: SpotifyAPI;
+  private readonly soundcloudAPI: SoundCloudAPI;
 
   constructor(@inject(TYPES.Services.YoutubeAPI) youtubeAPI: YoutubeAPI, @inject(TYPES.Services.SpotifyAPI) spotifyAPI: SpotifyAPI, @inject(TYPES.Services.SoundCloudAPI) soundcloudAPI: SoundCloudAPI) {
     this.youtubeAPI = youtubeAPI;
