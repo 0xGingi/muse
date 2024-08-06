@@ -55,7 +55,7 @@ There are a variety of image tags available:
 (Replace empty config strings with correct values.)
 
 ```bash
-docker run -it -v "$(pwd)/data":/data -e DISCORD_TOKEN='' -e SPOTIFY_CLIENT_ID='' -e SPOTIFY_CLIENT_SECRET='' -e YOUTUBE_API_KEY='' codetheweb/muse:latest
+docker run -it -v "$(pwd)/data":/data -e DISCORD_TOKEN='' -e SPOTIFY_CLIENT_ID='' -e SPOTIFY_CLIENT_SECRET='' -e YOUTUBE_API_KEY='' 0xgingi/muse:latest
 ```
 
 This starts Muse and creates a data directory in your current directory.
@@ -67,7 +67,7 @@ version: '3.4'
 
 services:
   muse:
-    image: codetheweb/muse:latest
+    image: 0xgingi/muse:latest
     restart: always
     volumes:
       - ./muse:/data
@@ -84,7 +84,7 @@ services:
 * Node.js (18.17.0 or later is required and latest 18.x.x LTS is recommended)
 * ffmpeg (4.1 or later)
 
-1. `git clone https://github.com/codetheweb/muse.git && cd muse`
+1. `git clone https://github.com/0xgingi/muse.git && cd muse`
 2. Copy `.env.example` to `.env` and populate with values
 3. I recommend checking out a tagged release with `git checkout v[latest release]`
 4. `yarn install` (or `npm i`)
