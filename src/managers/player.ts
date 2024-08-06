@@ -9,9 +9,10 @@ export default class {
   private readonly guildPlayers: Map<string, Player>;
   private readonly fileCache: FileCacheProvider;
 
-  constructor(@inject(TYPES.FileCache) fileCache: FileCacheProvider, @inject(TYPES.ThirdParty) thirdParty: ThirdParty) {
+  constructor(@inject(TYPES.FileCache) fileCache: FileCacheProvider, @inject(TYPES.ThirdParty) thirdparty: ThirdParty) {
     this.guildPlayers = new Map();
     this.fileCache = fileCache;
+    this.thirdparty = thirdparty;
   }
 
   get(guildId: string): Player {
@@ -19,7 +20,7 @@ export default class {
 
     if (!player) {
       player = new Player(this.thirdparty, this.fileCache, guildId);
-
+      
       this.guildPlayers.set(guildId, player);
     }
 
