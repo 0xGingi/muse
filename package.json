@@ -128,7 +128,8 @@
     "sync-fetch": "^0.3.1",
     "tsx": "3.8.2",
     "xbytes": "^1.7.0",
-    "ytsr": "^3.8.4"
+    "ytsr": "^3.8.4",
+    "soundcloud.ts": "^0.5.3"
   },
   "resolutions": {
     "@types/ws": "8.5.4"
