@@ -45,7 +45,7 @@ export default class {
   async soundcloudArtist(listId: string): Promise<SongMetadata[]> {
     return this.soundcloudAPI.getArtist(listId);
   }
-  
+
   async spotifySource(url: string, playlistLimit: number, shouldSplitChapters: boolean): Promise<[SongMetadata[], number, number]> {
     const parsed = spotifyURI.parse(url);
 
