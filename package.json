@@ -130,7 +130,7 @@
     "tsx": "3.8.2",
     "xbytes": "^1.7.0",
     "ytsr": "^3.8.4",
-    "soundcloud.ts": "^0.5.3"
+    "soundcloud.ts": "^0.5.2"
   },
   "resolutions": {
     "@types/ws": "8.5.4"
