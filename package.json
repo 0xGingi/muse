@@ -93,6 +93,7 @@
     "@distube/ytsr": "^2.0.0",
     "@prisma/client": "4.16.0",
     "@types/libsodium-wrappers": "^0.7.9",
+    "@types/mocha": "^10.0.7",
     "array-shuffle": "^3.0.0",
     "debug": "^4.3.3",
     "delay": "^5.0.0",

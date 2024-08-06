@@ -8,6 +8,7 @@ import ThirdParty from '../services/third-party.js';
 export default class {
   private readonly guildPlayers: Map<string, Player>;
   private readonly fileCache: FileCacheProvider;
+  private readonly thirdparty: ThirdParty;
 
   constructor(@inject(TYPES.FileCache) fileCache: FileCacheProvider, @inject(TYPES.ThirdParty) thirdparty: ThirdParty) {
     this.guildPlayers = new Map();
