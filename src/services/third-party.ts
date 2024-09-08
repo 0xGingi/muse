@@ -18,7 +18,7 @@ export default class ThirdParty {
       clientSecret: config.SPOTIFY_CLIENT_SECRET,
     });
 
-    this.soundcloud = new Soundcloud({});
+    this.soundcloud = new Soundcloud();
 
     void this.refreshSpotifyToken();
   }
