@@ -18,10 +18,8 @@ export default class {
 
   get(guildId: string): Player {
     let player = this.guildPlayers.get(guildId);
-
     if (!player) {
       player = new Player(this.thirdparty, this.fileCache, guildId);
-      
       this.guildPlayers.set(guildId, player);
     }
 

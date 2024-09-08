@@ -78,7 +78,7 @@ export default class AddQueryToQueue {
       const SOUNDCLOUD_HOSTS = [
         'soundcloud.com',
         'www.soundcloud.com',
-      ]
+      ];
 
       if (YOUTUBE_HOSTS.includes(url.host)) {
         // YouTube source

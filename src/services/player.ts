@@ -26,7 +26,7 @@ import Soundcloud from 'soundcloud.ts';
 export enum MediaSource {
   Youtube,
   HLS,
-  SoundCloud
+  SoundCloud,
 }
 
 export interface QueuedPlaylist {
@@ -439,7 +439,6 @@ export default class {
     } else if (this.status === STATUS.PAUSED) {
       this.audioPlayer?.stop(true);
     }
-  
 
     if (song.source === MediaSource.HLS) {
       return this.createReadStream({url: song.url, cacheKey: song.url});
