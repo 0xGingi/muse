@@ -1,6 +1,6 @@
 import {inject, injectable} from 'inversify';
 import PQueue from 'p-queue';
-import Soundcloud, {SoundcloudTrackV2} from 'soundcloud.ts';
+import Soundcloud, {SoundcloudTrack} from 'soundcloud.ts';
 import {SongMetadata, QueuedPlaylist, MediaSource} from './player.js';
 import {TYPES} from '../types.js';
 import KeyValueCacheProvider from './key-value-cache.js';
@@ -21,7 +21,7 @@ export default class {
 
   async search(query: string): Promise<SongMetadata[]> {
     const items = await this.scsrQueue.add(async () => this.cache.wrap(
-      async () => this.soundcloud.tracks.searchV2({q: query}),
+      async () => this.soundcloud.tracks.search({q: query}),
       {
         key: 'scsearch:' + query,
         expiresIn: ONE_HOUR_IN_SECONDS,
@@ -39,7 +39,7 @@ export default class {
 
   async get(query: string): Promise<SongMetadata[]> {
     const track = await this.scsrQueue.add(async () => this.cache.wrap(
-      async () => this.soundcloud.tracks.getV2(query),
+      async () => this.soundcloud.tracks.get(query),
       {
         key: 'scget:' + query,
         expiresIn: ONE_HOUR_IN_SECONDS,
@@ -55,7 +55,7 @@ export default class {
 
   async getPlaylist(query: string): Promise<SongMetadata[]> {
     const playlist = await this.cache.wrap(
-      async () => this.soundcloud.playlists.getV2(query),
+      async () => this.soundcloud.playlists.get(query),
       {
         key: 'scplaylist:' + query,
         expiresIn: ONE_MINUTE_IN_SECONDS,
@@ -88,7 +88,7 @@ export default class {
   // Not fully supported yet.
   async getArtist(userName: string): Promise<SongMetadata[]> {
     const tracks = await this.cache.wrap(
-      async () => this.soundcloud.users.tracksV2(userName),
+      async () => this.soundcloud.users.tracks(userName),
       {
         key: userName + 'tracks',
         expiresIn: ONE_MINUTE_IN_SECONDS,
@@ -96,7 +96,7 @@ export default class {
     );
 
     const user = await this.cache.wrap(
-      async () => this.soundcloud.users.getV2(userName),
+      async () => this.soundcloud.users.get(userName),
       {
         key: userName + 'user',
         expiresIn: ONE_MINUTE_IN_SECONDS,
@@ -130,7 +130,7 @@ export default class {
     track,
     queuedPlaylist,
   }: {
-    track: SoundcloudTrackV2;
+    track: SoundcloudTrack;
     queuedPlaylist?: QueuedPlaylist;
   }): SongMetadata[] {
     const base: SongMetadata = {
