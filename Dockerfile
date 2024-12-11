@@ -1,57 +1,31 @@
-FROM node:18-bullseye-slim AS base
+# Use Node.js LTS (matches engine requirement in package.json)
+FROM node:18-slim
 
-# openssl will be a required package if base is updated to 18.16+ due to node:*-slim base distro change
-# https://github.com/prisma/prisma/issues/19729#issuecomment-1591270599
-# Install ffmpeg
-RUN apt-get update \
-    && apt-get install --no-install-recommends -y \
+# Install required system dependencies
+RUN apt-get update && apt-get install -y \
+    python3 \
+    make \
+    g++ \
     ffmpeg \
-    tini \
-    openssl \
-    ca-certificates \
-    && apt-get autoclean \
-    && apt-get autoremove \
     && rm -rf /var/lib/apt/lists/*
 
+# Create app directory
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
 # Install dependencies
-FROM base AS dependencies
+RUN npm install
 
-WORKDIR /usr/app
-
-COPY package.json .
-COPY yarn.lock .
-
-RUN yarn install --prod
-RUN cp -R node_modules /usr/app/prod_node_modules
-
-RUN yarn install
-
-FROM dependencies AS builder
-
+# Copy source code
 COPY . .
 
-# Run tsc build
-RUN yarn prisma generate
-RUN yarn build
+# Generate Prisma client
+RUN npm run prisma:generate
 
-# Only keep what's necessary to run
-FROM base AS runner
+# Build the application
+RUN npm run build
 
-WORKDIR /usr/app
-
-COPY --from=builder /usr/app/dist ./dist
-COPY --from=dependencies /usr/app/prod_node_modules node_modules
-COPY --from=builder /usr/app/node_modules/.prisma/client ./node_modules/.prisma/client
-
-COPY . .
-
-ARG COMMIT_HASH=unknown
-ARG BUILD_DATE=unknown
-
-ENV DATA_DIR=/data
-ENV NODE_ENV=production
-ENV COMMIT_HASH=$COMMIT_HASH
-ENV BUILD_DATE=$BUILD_DATE
-ENV ENV_FILE=/config
-
-CMD ["tini", "--", "node", "--enable-source-maps", "dist/scripts/migrate-and-start.js"]
+# Start the bot
+CMD ["npm", "start"]

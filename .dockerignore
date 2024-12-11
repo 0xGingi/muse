@@ -1,6 +1,5 @@
 node_modules
-data
-dist
-dts
+npm-debug.log
 .env
-Dockerfile
+.git
+.gitignore
